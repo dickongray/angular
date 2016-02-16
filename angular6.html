@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" ng-app>
+<head>
+	<meta charset="UTF-8">
+	<title>Angular JS filters</title>
+	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+</head>
+<body ng-controller="mainCtrl">
+<div class="container">
+	<h1>Angular JS filters Avengers</h1>
+	<br>
+	
+	<input type="text" placeholder="search..." ng-model="search">
+	<!--<input type="text class="form-control" placeholder="actor" ng-model="search_actor">
+	<input type="text class="form-control" placeholder="character" ng-model="search_character"> -->
+	<br>
+
+	<table class="table">
+		<tr>
+			<th>Actor</th>
+			<th>Character</th>
+		</tr>
+		<tr ng-repeat="avenger in avengers | filter: search "> <!-- {actor: search} this  bit limits the filter just to actors name-->
+			<td>{{ avenger.actor }}</td>
+			<td>{{ avenger.character}}</td>
+		</tr>
+
+	</table>
+</div>
+	
+
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.26/angular.min.js"></script>
+<script>
+	function mainCtrl($scope){
+		$scope.avengers = [
+			{
+				actor: 'Robert Downey JR',
+				character: 'Iron Man'
+			},
+			{
+				actor: 'Chris Hemsworth',
+				character: 'Thor'
+			},
+			{
+				actor: 'Chris Evans',
+				character: 'Captain America'
+			},
+			{
+				actor: 'Mark Ruffalo',
+				character: 'The Hulk'
+			},
+			{
+				actor: 'Samuel L Jackson',
+				character: 'Nick Fury'
+			},
+			{
+				actor: 'Nick Sheffield',
+				character: 'Angular Man'
+			}
+
+		];
+		
+	}
+</script>
+</body>
+</html>

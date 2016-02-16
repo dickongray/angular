@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" ng-app>
+<head>
+	<meta charset="UTF-8">
+	<title>Angular JS filters</title>
+</head>
+<body ng-controller="mainCtrl">
+
+	<h1>Angular JS filters</h1>
+
+	<input type="text" placeholder="search..." ng-model="search">
+
+	<ul>
+		<li ng-repeat="item in list | filter: search">
+			{{ item | uppercase }}
+		</li>
+	</ul>
+
+
+	
+
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.26/angular.min.js"></script>
+<script>
+	function mainCtrl($scope){
+		$scope.list = [
+			'red',
+			'blue',
+			'green',
+			'yellow'
+		];
+		
+	}
+</script>
+</body>
+</html>

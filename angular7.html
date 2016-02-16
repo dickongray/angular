@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en" ng-app>
+<head>
+	<meta charset="UTF-8">
+	<title>Angular JS filters</title>
+	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+	<style>
+	.done{
+		color: green;
+		text-decoration: line-through;
+		}
+		label{
+			text-decoration: inherit;
+		}
+		</style>
+</head>
+<body ng-controller="mainCtrl">
+<div class="container">
+	<h1>Todos</h1>
+
+	 <ul>
+	 	<li ng-repeat="todo in todos" ng-class="{done:todo.completed}">
+	 		<label for="todo{{$index}}">
+	 			<input type="checkbox" id="todo{{$index}}"
+	 			ng-model="todo.completed" ng-change="store()">
+	 			{{ todo.text }}
+	 		</label>
+	 	</li>
+	 </ul>
+
+
+	 <form class="form form-inline" ng-submit="add()">
+	 	<input type="text" class="form-control" ng-model="newtodo">
+	 	<button class="btn btn-primary">Add</button>
+	 </form>
+
+	 <button class="btn btn-warning" ng-click="clear()">clear</button>
+	
+</div>
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.26/angular.min.js"></script>
+<script>
+	function mainCtrl($scope){
+		$scope.newtodo = '';
+		$scope.todos = '';
+
+		if(typeof localStorage.todos != 'undefined'){
+			$scope.todos = JSON.parse(localStorage.todos);
+		}else{
+			$scope.todos = [];
+		}
+		$scope.add = function(){
+			// if nothing is typed in quit this function
+			if($scope.newtodo == '') return ;
+			// add a new item to the todos array, with the text
+			//from the input box
+			$scope.todos.push({
+				text: $scope.newtodo,
+				completed: false
+			});
+			//clear out the input box for next todos
+			$scope.newtodo = '';
+			$scope.store();
+		}
+		$scope.store = function(){
+			//delte all the $$hashkey properties
+			$scope.todos.forEach(function(todo){
+				delete todo.$$hashKey;
+			})
+			//stingify the list
+			var todos = JSON.stringify($scope.todos);
+			// store the list in localSotrage
+			localStorage.setItem('todos', todos);
+		}
+		// this runs this function on every item
+		$scope.clear = function(){
+			$scope.todos = $scope.todos.filter(
+				function(todo){
+					return todo.completed == false;
+				});
+				$scope.store();
+		}
+	}
+</script>
+</body>
+</html>
